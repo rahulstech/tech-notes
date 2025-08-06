@@ -1,0 +1,30 @@
+Useful git commands
+===================
+
+1. delete a branch:
+   i. delete local branch: git branch -d branch-name
+   			   to delete forcefully use -D in place of -d
+   			   
+   ii. delete remote branch: git push --delete remote-name branch-name
+
+2. create, push, delete a tag
+create: git tag <tag name>
+NOTE: tag must be created after commit
+
+push: git push <remote name> <tag name>
+
+delete: git tag -d <tag name> 
+to delete the tag from remote: git push --delete <tag name>
+
+3. when accidentally commit locally on main branch but not pushed to remote branch then follow the steps
+
+create new branch: git checkout -b <branch name>
+push the branch: git push <remote name> <new branch name>
+change to main branch: git checkout <main branch name>
+reset to second last commit: git reset --hard HEAD~1
+
+4. git stash : save temporarily without commit, but change to last successful commit. to continue to work from last stash work use "git stash apply"
+5. git stash list : show list of stashes
+6. git stash pop : delete the latest stash
+7. 
+

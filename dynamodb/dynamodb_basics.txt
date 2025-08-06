@@ -1,0 +1,92 @@
+Create Dynamo DB Table
+======================
+DynamoDB is schema less  key-value pair db. schemaless means like SQL we don't need to define the table structure before hand. During table creation we only define the key attributes only. later during item insertion we can add any attributes to each item.
+this powers developer to create denormalized tables. 
+for example: in SQL to store user details and user posts details we will create two tables users and posts. and use the user_id in users table as foreign_key in posts table which will create 1 to many relation from users to posts table. this is the normalized design. in case of dynamo db we will store both user and its posts in the same table named user_posts. in each partition it will contains the user details as well as posts details for the user. in this case user_id will be used as partition key and post_id will be used as sort key. "METADATA" or similar thing can be used as sort key for user details.
+this is how single-table design approach is performed in dynamodb.
+
+Import: in case of dynamo db design the query first, then design the table. for example: if any query from user_posts table requires some data of user then put those user deta in the this table. otherwise no need to store user data unncessarily. 
+this is the major difference between designing sql tables and dynamodb table
+
+Keys
+----
+Partition - a collection
+Partition Key (PK) - a key for uniquely identifying the collection, not the collection item. this key is required
+Sort Key (SK) - a unique key in a particular collection for identifying each items in a collection separately. this key is optional.
+primary key - PK + SK = Primary Key. to uniquely a item in the table use both the partition key and the sort key.
+
+for example: in user posts table user_id is the partition key (pk) as a single use may have zero or more posts. and to uniquely identify a particular post of an user use sort key (sk) like this:
+{ "PK": { "S": "USER#1"}, "SK":{"S":"POST#1"},{"content":{ "S": "this is post 1"}}}
+{ "PK": { "S": "USER#1"}, "SK":{"S":"POST#2"},{"content":{ "S": "this is post 2"}}}
+{ "PK": { "S": "USER#2"}, "SK":{"S":"POST#1"},{"content":{ "S": "this is another post 1"}}}
+
+Data Types
+----------
+simple: String (S), Number (N), Binary (B), Boolean (BOOL), Null (NULL)
+complex: List (L), Map (M), Set{ String Set (SS), Number Set, (NS), Binary Set (BS) }
+
+CRUD Methods:
+-------------
+
+1. PutItem - create new item
+{
+"TableName": "users_posts",
+"Items": {
+"PK": {"S": ... },
+"SK": {"S": ... },
+"content": {"S": ... }
+}
+}
+2. GetItem - get a single item
+{
+"TableName": "user_posts",
+"Key": {
+"PK": {"S": ... },
+"SK": {"S": ... }
+}
+}
+
+3. Query - get multiple items based on filter
+{
+"TableName": "user_posts",
+"KeyConditionExpression": "PK = :pk AND begins_with(SK,:sk)",
+"ExpressionAttributeValues": {
+":pk": {"S": ... },
+":sk": {"S": ... }
+}
+}
+
+4. UpdateItem - update existing item
+{
+"TableName": "user_posts",
+"Key": {
+"PK": {"S": ... },
+"SK": {"S": ... }
+},
+"UpdateExpression": "SET cola = :cola, colb = :colb", // use SET / REMOVE / ADD
+"ExpressionAttributeValues: {
+":cola": { "S": ... },
+":colb": { "S": ... }
+}
+}
+5. DeleteItem - delete existing item
+// single item
+{
+"TableName": "user_posts",
+"Key": {
+"PK": {"S": ...},
+"SK": {"S": ...}
+}
+}
+// entire partition
+{
+"TableName": "user_posts",
+"Key": {
+"PK": {"S": ...}
+}
+}
+
+Secondary Indices
+-----------------
+Global Index - 
+Local Index -
