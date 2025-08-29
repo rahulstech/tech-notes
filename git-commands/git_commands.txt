@@ -23,8 +23,12 @@ push the branch: git push <remote name> <new branch name>
 change to main branch: git checkout <main branch name>
 reset to second last commit: git reset --hard HEAD~1
 
-4. git stash : save temporarily without commit, but change to last successful commit. to continue to work from last stash work use "git stash apply"
+4. git stash : save temporarily tracked entries from last commit without commit. with the option "-u" it saves the untracked entries like entries that are created after last commit, also saved. with option "-a" it will save all the entris tracked untracked ignored. to continue to work from last stash work use "git stash apply"
 5. git stash list : show list of stashes
 6. git stash pop : delete the latest stash
-7. 
+7. **note:** after stash it do not automatically change to the last successful commit. but need to manually do it with very causion. steps are as below
+ i. first do git stash -u. it will save all changes tracked and untracked
+ ii. use git status and check that there is no untracked entries to save or commit
+ iii. not hard reset to head i.e. the last commit with git reset [--hard] HEAD. 
+ iv. it may be possible some entries still exists which are not part of last commit but created after commit and later stash. so we can simply delete those entries wit git clean -fd.  
 
