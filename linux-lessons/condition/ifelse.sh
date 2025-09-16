@@ -7,6 +7,8 @@
 #
 # adding spaces before and after the main condition is the general syntax of if statement
 # also "then" should be in next line
+# 
+# [[ ]] is the general purpose conditional test. it can perform arithmatic, string, file etc. condition test 
 
 if [[ 7 -gt 5 ]]
 then
@@ -22,6 +24,8 @@ echo "======================================="
 #       but for [[]] i need to use -gt -lt -le -ge -eq.
 # NOTE: -eq is string comparison operator 
 #        == is numeric comparion operator
+# (()) is arithmatic only conditional test. it handles only + - * / % > < >= <= == != && || type of operators.
+
 if ((3 > 5))
 then 
     echo "8 is more than 5"
@@ -31,3 +35,7 @@ fi
 
 echo "======================================="
 
+# Note: the difference between [[ 3 > 5 ]] and ((3>5))
+# > is a string comparison operation so [[ 3 > 5 ]] evaluates as "3" > "5". now in ASCII
+# 3 = 51 and 5 = 53 therfore 51 > 53 is flase
+# but in ((3>5)) it evaluates as it is i.e. the arithmatic comparison

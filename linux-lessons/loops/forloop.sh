@@ -1,13 +1,3 @@
-# read -p "how many iteration you want: " it
-
-# count=0
-
-# while (( count < it ))
-# do
-#     echo "step $count"
-#     ((count++))
-# done
-
 
 # arr=( 1 2 5 3 4 9 7 3)
 # for x in ${arr[*]}

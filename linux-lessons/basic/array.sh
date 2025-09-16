@@ -1,45 +1,20 @@
-declare -A dic # to use array as dictionary i need to declare it first, for plain array i don't need this
-dic=( [key1]="val1" [key2]="val2" [key3]="val3")
-dic+=([Key4]="val4")
+nums=() # initialize an empty array; it is not mandatory
+nums+=(5) # appending a single element
+nums+=(7 8 9 10 11 12 13 14 15 16 17 18 19) # appending multiple elements
 
-# main difference between, note the double quote
-# "${dic[*]}": returns all values in a single string
-# "${dic[@]}": returns all values separately
-# how to check that?
-#
-# for v in "${dic[*]}""
-# do 
-#     echo $v
-# done
-#
-# prints all values in a single string
-# "val1 val2 val3 val4"
-#
-# for v in "${dic[@]}""
-# do 
-#     echo $v
-# done
-#
-# prints all values in seperate lines
-# val1
-# val2
-# val3
-# val4
+echo "size of the array ${#nums[@]}" # returns the size of array ; Note the use of [@]
 
-# print only values
-
-echo "printing the values in dictionary"
-
-for v in ${dic[@]}
-do 
-    echo $v
-done 
-
-# print only keys
-
-echo "printing the keys in dictionary"
-
-for k in ${!dic[@]}
+for n in ${nums[@]} # accessing array values with nums[@]
 do
-    echo $k
+echo $n
 done
+
+nums[1]=20 # update array element by index
+echo ${nums[1]} # access array element by index
+
+# creating sub array ; arrayvar[@]:start_index:length
+# note the use of nums[@] not nums. if we don't use nums[@] then it will create the substring of nums
+subnums=${nums[@]:3:6}  
+echo ${subnums[*]} # subnums[*] returns all the values as a single string
+
+echo ${!nums[*]} # returns all the indices as string ; use !nums[@] to get the indices separately
