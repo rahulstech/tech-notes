@@ -1,0 +1,72 @@
+-- prepend items in the list; returns new length
+lpush friends "Rivu" "Ratul" "Poushali"
+
+-- append items in the list; returns new length
+rpush friends "Ratnadeep"
+
+-- get list items between
+lrange friends 0 -1
+
+-- get length of list
+llen friends
+
+-- prepend items in the list if the list exists
+-- similarly rpushx append items in the list if the list exists
+lpushx fiends "Agnivo"
+
+-- colauge key does not exist, so "Arindam" will not be pushed
+lpushx colauge "Arindam"
+
+-- get all items between start and end both inclusive. -1 means last element -2 second last and so on
+lrange colauge 0 -1
+
+-- deletes one item from list top; returns removed item
+lpop friends
+
+-- deletes one item from list bottom; returns removed item
+rpop friends
+
+-- get element at given index; returns null if index out of range; +ve index returns element from top, -ve index returns elements from bottom
+lindex friends -1
+
+-- returns the index of the element or null if not found
+lpos friends "Poushali"
+
+-- change element at give index
+lset friends 3 "Ratul Chatterjee"
+
+-- removes all elements except the given range, both start and stop inclusive. out of range index does not throw error
+-- NOTE: -ve index is not allowed,
+ltrim friends 1 3
+
+-- remove multiple elements from multiple lists either from left or from right side
+-- Syntax: LMPOP N list1 [list2 list3 ... listN] [LEFT|RIGHT] [COUNT X]
+-- returns array of removed items
+lmpop 1 friends left count 2
+
+-- insert before or after the item from top; returns 0 on successful
+-- NOTE: there is no rinsert
+linsert friends BEFORE "Ratul" "Abijeet"
+
+-- if the pivot does ( before or after which item to insert ) not exists then no insert happens and returns -1
+linsert friends after "unknown" "Snehashish"
+
+-- Syntax: LREM <key> count element
+-- remove count occurrence of element.
+-- if count < 0 delete bottom to top
+-- if count > 0 delete top to bottom
+-- if count = 0 delete all
+-- returns the number of elements removed
+lrem friends -2 "Poushali"
+
+lrem friends 2 "Poushali"
+
+-- Syntax: LMOVE <src key> <dest key> <LEFT|RIGHT> <LEFT|RIGHT>
+-- moves one element from source list at top (LEFT) or bottom (RIGHT) to destination at top (LEFT) or bottom (RIGHT)
+lmove friends current_friend left left
+
+-- blocking commands: remove one element from top (BLPOP) or bottom (BRPOP), if list is empty then wait for timeout seconds
+-- Syntax: BLPOP / BRPOP <key> [ key1 key2 ... ] <timeout>
+BLPOP current_friend 2
+
+-- also there are other blocking commands: BLMOVE, BLMPOP

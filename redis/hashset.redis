@@ -1,0 +1,24 @@
+
+# HashSet
+
+hset <key> <field1> <value1> [ <field2> <value2> ...]: atleast one key-value pair value required, more than one pair also allowed. if the key already exists then value is updated, otherwise key is added.
+
+hsetnx <key> <field1> <value1>: set key value pairs if key does not exist
+
+hget <key> <field>: get the value for the field, returns null if field not found
+
+hgetall <key>: get all key values as list in the sequence key1 -> value1 > key2 -> value2 ...
+
+hdel <key> <field> [<field>]: delete one or more fields from hash set
+
+hexpire <key> <seconds> fields <n> <field1> <field2> ... <fieldn>: set ttl to specified fileds only in seconds. Note: i have to mention the number of field "n" for this
+
+hpersist <key> fields <n> <field1> <field2> ... <fieldn>: remove ttl from the given n fields
+
+httl <key> fields <n> <field1> <field2> ... <fieldn>: get the ttl for the given fields
+
+hvals <key>: get only values
+
+hkeys <key>: get all keys
+
+hlen <key>: number of fields
